@@ -19,14 +19,14 @@ fn process(input: &str) -> u32 {
 }
 
 fn main() {
-    let contents = fs::read_to_string("input1.txt").expect("Not a file");
+    let contents = fs::read_to_string("input.txt").expect("Not a file");
     let sum = process(&contents);
     println!("{sum}");
 }
 
 mod test {
     #[test]
-    fn test_input() {
+    fn test_input_1() {
         use super::*;
         let default_input = "1abc2
 pqr3stu8vwx
