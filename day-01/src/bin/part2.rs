@@ -15,6 +15,7 @@ fn process(input: &str) -> u32 {
         // index of char and char itself
         let mut digits: Vec<(usize, char)> = vec![];
 
+        /*
         for (digit_int, digit_str) in DIGIT_DICT.into_iter().enumerate() {
             let re = Regex::new(digit_str).unwrap();
             for mtch in re.find_iter(line) {
@@ -24,6 +25,20 @@ fn process(input: &str) -> u32 {
                 ));
             }
         }
+        */
+
+        DIGIT_DICT
+            .into_iter()
+            .enumerate()
+            .for_each(|(digit_int, digit_str)| {
+                let re = Regex::new(digit_str).unwrap();
+                for mtch in re.find_iter(line) {
+                    digits.push((
+                        mtch.start(),
+                        char::from_digit(digit_int as u32, 10).unwrap(),
+                    ));
+                }
+            });
 
         digits.extend(
             line.chars()
