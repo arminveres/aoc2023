@@ -15,7 +15,6 @@ fn process(input: &str) -> u32 {
         // index of char and char itself
         let mut digits: Vec<(usize, char)> = vec![];
 
-        // FIXME: (aver) fix not finding duplicate occurences
         for (digit_int, digit_str) in DIGIT_DICT.into_iter().enumerate() {
             let re = Regex::new(digit_str).unwrap();
             for mtch in re.find_iter(line) {
@@ -24,31 +23,22 @@ fn process(input: &str) -> u32 {
                     char::from_digit(digit_int as u32, 10).unwrap(),
                 ));
             }
-            // match line.find(digit_str) {
-            //     Some(i) => digits.push((i, char::from_digit(digit_int as u32, 10).unwrap())),
-            //     None => (),
-            // }
         }
 
-        // println!("{:?}", digits);
-        // let digits: Vec<(usize, char)> = line
         digits.extend(
             line.chars()
                 .enumerate()
-                .filter(|(idx, char)| char.is_digit(10)),
+                .filter(|(_, char)| char.is_digit(10)),
         );
-        // println!("{:?}", digits);
         digits.sort_by_key(|k| k.0);
-        println!("{:?}", digits);
+        // println!("{:?}", digits);
 
         if digits.len() == 0 {
             panic!("Line does not contain digits")
         }
 
         out_str.push(digits.first().unwrap().1.to_owned());
-        // if digits.len() > 1 {
         out_str.push(digits.last().unwrap().1.to_owned());
-        // }
         println!("{out_str}");
 
         sum += out_str.parse::<u32>().unwrap();
